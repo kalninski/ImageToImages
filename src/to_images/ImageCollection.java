@@ -16,8 +16,10 @@ public class ImageCollection {
 		File folder = new File(folderPath);
 		File[] imgList = folder.listFiles();
 		for(File f : imgList) {
-	//		System.out.println("path = " + f.getAbsolutePath());
-			listOfImagesInFolder.add(new ImageNode(f.getAbsolutePath()));
+	//	System.out.println("path = " + f.getPath());
+			if(!f.getPath().contains(".ini")) {
+			listOfImagesInFolder.add(new ImageNode(f.getPath()));
+			}
 		}
 		size = listOfImagesInFolder.size();
 		listOfImagesInFolder.sort((ImageNode n1, ImageNode n2) -> n1.avgCol - n2.avgCol);

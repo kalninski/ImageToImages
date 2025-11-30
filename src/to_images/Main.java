@@ -8,9 +8,9 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-	//	ImageNode n1 = new ImageNode("/Users/maksla/Desktop/ZiemassvetkuKarte/MI_atteli/MIatteli/mi8wymq248d2kz.jpeg");
+	//	ImageNode n1 = new ImageNode("C:\\Users\\Toms\\Desktop\\kaut_kas_ko_zimet\\Zvaigz╠īn╠¦u da╠äva╠äta╠äja.jpg");
 		
-		ImageCollection ic = new ImageCollection("/Users/maksla/Desktop/ZiemassvetkuKarte/MI_atteli/MIatteli");
+		ImageCollection ic = new ImageCollection("C:\\Users\\Toms\\Desktop\\kaut_kas_ko_zimet");
 		
 	//	for(ImageNode iN : ic.listOfImagesInFolder) {
 			
@@ -20,7 +20,8 @@ public class Main {
 		
 	//	ic.sort((ImageNode n1, ImageNode n2) -> n1.avgCol > n2.avgCol);
 
-		ImageToEdit iTE = new ImageToEdit("/Users/maksla/Desktop/KalendaraAtteli/IMG_6615 copy 2.jpg");
+		ImageToEdit iTE = new ImageToEdit("C:\\Users\\Toms\\Downloads\\coffee_upscayl_6x_ultramix-balanced-4x_upscayl_4x_ultramix-balanced-4x.png");
+		
 		iTE.imageCollection = ic;
 		iTE.oneStrip(iTE.listStripsSource.get(0), 0);
 		
