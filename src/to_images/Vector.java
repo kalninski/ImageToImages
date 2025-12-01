@@ -18,7 +18,7 @@ public class Vector {
 	int scaledColZ;
 	
 	int avgCol;
-	
+	double avgColN;
 	int indexOfLightness;
 	
 	public Vector() {}
@@ -41,8 +41,8 @@ public class Vector {
 		
 		avgCol = (xOrig + yOrig + zOrig)/3;
 		
-		double light = (double) avgCol/255.0f;
-		indexOfLightness = (int) light * numPictures;//if no similar color vectors found, then pick the image that has same place in the image range
+		avgColN = ((double) avgCol)/255.0;
+	//	indexOfLightness = (int) avgColN * numPictures;//if no similar color vectors found, then pick the image that has same place in the image range
 		
 	}
 	//0 = red, 1 = green, 2 = blue, numBooks = num. of available images returns the restricted color values.

@@ -33,6 +33,7 @@ public class ImageNode {
 	boolean isEdge;
 	
 	int avgCol;
+	double avgColN; 
 		
 	BufferedImage img;
 	BufferedImage cell;
@@ -45,22 +46,37 @@ public class ImageNode {
 			int w = img.getWidth();
 
 			Image oneCell = img.getScaledInstance(30, 46, Image.SCALE_DEFAULT);
-			Image avgColorPix = img.getScaledInstance(1, 1, Image.SCALE_SMOOTH);
+			Image avgColorPix = img.getScaledInstance(5, 5, Image.SCALE_SMOOTH);
 
 			cell = new BufferedImage(30, 46, BufferedImage.TYPE_INT_RGB);
-			BufferedImage pix = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+			BufferedImage pix = new BufferedImage(5, 5, BufferedImage.TYPE_INT_RGB);
 			pathImg = path;
 			img = null;
 			cell.getGraphics().drawImage(oneCell, 0, 0, null);
 			pix.getGraphics().drawImage(avgColorPix, 0, 0, null);
 			
-			int color = pix.getRGB(0,0);
-			xRed = (color >> 16) & 0xFF;
-			yGreen = (color >> 8) & 0xFF;
-			zBlue = (color) & 0xFF;
+			for(int x = 0; x < 5; x++) {
+				for(int y = 0; y < 5; y++) {
+					int color = pix.getRGB(x,y);
+					xRed += (color >> 16) & 0xFF;
+					yGreen += (color >> 8) & 0xFF;
+					zBlue += (color) & 0xFF;
+				}
+			}
+			
+			xRed = xRed / 25;
+			yGreen = yGreen / 25;
+			zBlue = zBlue / 25;
+
+			
 			avgCol = (xRed + yGreen + zBlue)/3;
+			
+			avgColN = ((double) avgCol) /255.0;
+			
+			
+			
 			getGradient();
-			setAvgPixel();
+
 			
 			normalize();
 			
@@ -92,7 +108,7 @@ public class ImageNode {
 		
 		
 		
-		for(i = 0; i < h; i +=2) {
+		for(i = 0; i < h; i ++) {
 			
 			color = cell.getRGB(0, i);
 			
@@ -100,43 +116,35 @@ public class ImageNode {
 			int green = (color >> 8) & 0xFF;
 			int blue = (color) & 0xFF;
 			
-			avgRed += red;
-			avgGreen += green;
-			avgBlue += blue;
+
 			
 			sub1 = (red + green + blue) / 3;
-			m++;
+
 			color = cell.getRGB(w - 1, i);
 			
 			red = (color >> 16) & 0xFF;
 			green = (color >> 8) & 0xFF;
 			blue = (color) & 0xFF;
 			
-			avgRed += red;
-			avgGreen += green;
-			avgBlue += blue;
-			
+
 			sub2 = (red + green + blue) / 3;
 			
-			avgDX += (sub1 - sub2);
+			avgDX += (sub2 - sub1);
 			
 			m++;
 		}
 		
-		for(j = 0; j < w; j+=2) {
+		for(j = 0; j < w; j++) {
 			
 			color = cell.getRGB(j, 0);
 			
 			int red = (color >> 16) & 0xFF;
 			int green = (color >> 8) & 0xFF;
 			int blue = (color) & 0xFF;
-			
-			avgRed += red;
-			avgGreen += green;
-			avgBlue += blue;
-			
+						
 			sub1 = (red + green + blue) / 3;
-			n++;
+			
+
 			
 			color = cell.getRGB(j, h - 1);
 			
@@ -144,9 +152,7 @@ public class ImageNode {
 			green = (color >> 8) & 0xFF;
 			blue = (color) & 0xFF;
 			
-			avgRed += red;
-			avgGreen += green;
-			avgBlue += blue;
+
 			
 			sub2 = (red + green + blue) / 3;
 			
@@ -155,16 +161,16 @@ public class ImageNode {
 			n++;
 		}
 		
-		double avgDiffX = ((double) avgDX) / m ;
-		double avgDiffY = ((double) avgDY) / n;
+		double avgDiffX = ((double) avgDX) / (m + 1) ;
+		double avgDiffY = ((double) avgDY) / (n + 1);
 		
 		
 		
-		divisor = m + n;
+
 		
 		double lenOfGrad = Math.sqrt(Math.pow(avgDiffY,2) + Math.pow(avgDiffX, 2));
 				System.out.println("The avgDiffX = " + avgDiffX + " avgDiffY = " + avgDiffY + " angle = " + angleOfEdge);	
-		if(lenOfGrad > 60) {
+		if(lenOfGrad > 50) {
 			isEdge = true;
 			angleOfEdge = (Math.atan(avgDiffY/avgDiffX)) * (180/Math.PI);
 			System.out.println("The avgDiffX = " + avgDiffX + " avgDiffY = " + avgDiffY + " angle = " + angleOfEdge);
@@ -172,30 +178,7 @@ public class ImageNode {
 		
 	}
 	
-	void setAvgPixel() {
-		int j = 0;
-		for(int i = 1; i < 16; i++) {
-			j++;
-			divisor ++;
 
-			int color = cell.getRGB(i, j);
-			
-			avgRed += (color >> 16) & 0xFF;
-			avgGreen += (color >> 8) & 0xFF;
-			avgBlue += (color) & 0xFF;
-		}
-		
-		avgRed /= divisor;
-		avgGreen /= divisor;
-		avgBlue /= divisor;
-		
-			
-		xRedN = avgRed;
-		yGreenN = avgGreen;
-		zBlueN = avgBlue;
-		
-		
-	}
 	
 	
 	

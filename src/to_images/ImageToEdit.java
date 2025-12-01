@@ -135,7 +135,7 @@ public class ImageToEdit {
 		
 		
 		
-		for(i = 0; i < 46; i +=2) {
+		for(i = 0; i < 46; i ++) {
 			
 			color = strip.getRGB(x + 0, i);
 			
@@ -145,7 +145,7 @@ public class ImageToEdit {
 			
 			
 			sub1 = (red + green + blue) / 3;
-			m++;
+
 			color = strip.getRGB(x + 29 , i);
 			
 			red = (color >> 16) & 0xFF;
@@ -160,7 +160,7 @@ public class ImageToEdit {
 
 		}
 		
-		for(j = 0; j < 30; j+=2) {
+		for(j = 0; j < 30; j++) {
 			
 			color = strip.getRGB( x + j, 0);
 			
@@ -172,7 +172,7 @@ public class ImageToEdit {
 			
 			sub1 = (red + green + blue) / 3;
 			
-			n++;
+
 			color = strip.getRGB(x + j, 45);
 			
 			red = (color >> 16) & 0xFF;
@@ -187,8 +187,8 @@ public class ImageToEdit {
 			n++;
 		}
 		
-		double avgDiffX = ((double) avgDX) / m ;
-		double avgDiffY = ((double) avgDY) / n; 
+		double avgDiffX = ((double) avgDX) / (m + 1) ;
+		double avgDiffY = ((double) avgDY) / (n + 1); 
 		
 		double lenGrad = Math.sqrt(Math.pow(avgDiffY, 2) + Math.pow(avgDiffX, 2));
 		
@@ -212,20 +212,20 @@ public class ImageToEdit {
 			double minDotProd = 0.997;
 			
 			boolean imgFound = false;
+	//		synchronized (imageCollection) {// !!!
 			for(ImageNode in : imageCollection.listOfImagesInFolder) {//<-- synchronize imageCollection ?
 				
 				double angle = getAngleEdge(listStripsEdgeSource.get(indexOf), x);
 				angle  = angle * (180 / Math.PI);
 //				System.out.println("angle  = " + angle);
 				
-				if(angle != 180 && Math.abs((angle - in.angleOfEdge)) < 20 && Math.abs((angle - in.angleOfEdge)) > 0 &&  dotProduct(in, v) > 0.98 && in.isEdge) {
+				if(angle != 180 && Math.abs((angle - in.angleOfEdge)) < 10 && Math.abs((angle - in.angleOfEdge)) > 0 &&  dotProduct(in, v) > 0.98 && in.isEdge && Math.abs(in.avgColN - v.avgColN) < 0.1) {
 					System.out.println("Angle  = " + angle + " for image : " + in.pathImg);
 					nodeToUse = in;
-					minDotProd = 1.0;
+					minDotProd = 1.1;
 				}
 				
-				if(dotProduct(in, v) > minDotProd) {
-					
+				if(dotProduct(in, v) > minDotProd &&  Math.abs(in.avgColN - v.avgColN) < 0.1) {
 					nodeToUse = in;
 					minDotProd = dotProduct(in, v);
 					i++;
@@ -233,6 +233,7 @@ public class ImageToEdit {
 				}
 				
 			}
+//			}
 			if(nodeToUse != null) {
 					g2dOut.drawImage(nodeToUse.cell, x, 0, null);
 			}else {
@@ -280,7 +281,7 @@ public class ImageToEdit {
 			y += 46;
 		}
 		
-		File output = new File("C:\\Users\\Toms\\Desktop\\Foto_Prezidents_Edgars_Rinkēvičs\\Foto_Prezidents_Edgars_Rinke╠ävic╠īs\\Sample_Better_Color_KAFIJA_VISSI_VAKI.png");
+		File output = new File("C:\\Users\\Toms\\Desktop\\Foto_Prezidents_Edgars_Rinkēvičs\\Foto_Prezidents_Edgars_Rinke╠ävic╠īs\\Sample_Better_Color_Stonks.png");
 		
 		try {
 			ImageIO.write(outputImg, "jpeg", output);

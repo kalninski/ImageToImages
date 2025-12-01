@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-	//	ImageNode n1 = new ImageNode("C:\\Users\\Toms\\Desktop\\kaut_kas_ko_zimet\\Zvaigz╠īn╠¦u da╠äva╠äta╠äja.jpg");
+	//	ImageNode n1 = new ImageNode("C:\\Users\\Toms\\Desktop\\Foto_Prezidents_Edgars_Rinkēvičs\\Foto_Prezidents_Edgars_Rinke╠ävic╠īs\\New folder\\Ziema╠ä vajag sniegu!.jpg");
 		
 		ImageCollection ic = new ImageCollection("C:\\Users\\Toms\\Desktop\\kaut_kas_ko_zimet");
 		
@@ -20,10 +20,10 @@ public class Main {
 		
 	//	ic.sort((ImageNode n1, ImageNode n2) -> n1.avgCol > n2.avgCol);
 
-		ImageToEdit iTE = new ImageToEdit("C:\\Users\\Toms\\Downloads\\coffee_upscayl_6x_ultramix-balanced-4x_upscayl_4x_ultramix-balanced-4x.png");
+		ImageToEdit iTE = new ImageToEdit("C:\\Users\\Toms\\Downloads\\mqdefault_upscayl_6x_ultramix-balanced-4x_upscayl_4x_ultramix-balanced-4x.png");
 		
 		iTE.imageCollection = ic;
-		iTE.oneStrip(iTE.listStripsSource.get(0), 0);
+	//	iTE.oneStrip(iTE.listStripsSource.get(0), 0);
 		
 		iTE.renderImage("NewImg");
 	}
