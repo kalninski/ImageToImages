@@ -20,12 +20,13 @@ public class Main {
 		
 	//	ic.sort((ImageNode n1, ImageNode n2) -> n1.avgCol > n2.avgCol);
 
-		ImageToEdit iTE = new ImageToEdit("C:\\Users\\Toms\\Downloads\\mqdefault_upscayl_6x_ultramix-balanced-4x_upscayl_4x_ultramix-balanced-4x.png");
-		
-		iTE.imageCollection = ic;
+//		ImageToEdit iTE = new ImageToEdit("C:\\Users\\Toms\\Downloads\\118-1188844_thinking-emoji-meme-png-transparent-png_upscayl_4x_ultramix-balanced-4x.png");
+		ImageToEdit iTE1 = new ImageToEdit("C:\\Users\\Toms\\Downloads\\555740793_791029863793343_7168530183871616898_n_upscayl_4x_ultramix-balanced-4x.png");
+		iTE1.imageCollection = ic;
 	//	iTE.oneStrip(iTE.listStripsSource.get(0), 0);
 		
-		iTE.renderImage("NewImg");
+	//	iTE.renderImage("EMOJI", "png");
+		iTE1.renderImage("OWL", "png");
 	}
 
 }

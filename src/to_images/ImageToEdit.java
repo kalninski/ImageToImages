@@ -252,7 +252,7 @@ public class ImageToEdit {
 		//}
 	}
 	
-	public void renderImage(String newName) {
+	public void renderImage(String newName, String extention) {
 		
 		ArrayList<Thread> listOfThreads = new ArrayList<Thread>();
 		
@@ -281,7 +281,7 @@ public class ImageToEdit {
 			y += 46;
 		}
 		
-		File output = new File("C:\\Users\\Toms\\Desktop\\Foto_Prezidents_Edgars_Rinkēvičs\\Foto_Prezidents_Edgars_Rinke╠ävic╠īs\\Sample_Better_Color_Stonks.png");
+		File output = new File("C:\\Users\\Toms\\Downloads\\" + newName + "." + extention);
 		
 		try {
 			ImageIO.write(outputImg, "jpeg", output);
